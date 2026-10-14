@@ -1,0 +1,5 @@
+# La web es pública, pero no tiene por qué salir en Google: son trabajos del
+# instituto. Si algún día quieres que se indexe, borra la línea Disallow (y el
+# <meta name="robots" content="noindex, nofollow"> de las páginas).
+User-agent: *
+Disallow: /

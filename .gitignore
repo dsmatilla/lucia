@@ -1,0 +1,2 @@
+# Lo construye GitHub Actions en cada despliegue, no hace falta subirlo.
+dist/
