@@ -4,16 +4,39 @@ Las páginas que Lucía va subiendo, publicadas en <https://lucia.srz.es>.
 
 ## Cómo subir una página
 
-1. Entra en la carpeta **`paginas`** aquí arriba.
+1. Entra en la carpeta **`paginas`** aquí arriba y, dentro, en la de la
+   asignatura (por ejemplo `frances`).
 2. Pulsa **Add file → Upload files** y arrastra tu `.html`.
 3. Abajo del todo, **Commit changes**.
 
-En un par de minutos está publicado. El nombre del fichero es la dirección:
-`trabajo-historia.html` se ve en `lucia.srz.es/trabajo-historia.html`.
+En un par de minutos está publicado. La carpeta y el nombre del fichero son la
+dirección: `frances/examen-de-minou.html` se ve en
+`lucia.srz.es/frances/examen-de-minou.html`.
 
-La portada (`lucia.srz.es`) se escribe sola con la lista de todo lo que haya en
-`paginas`, de lo más nuevo a lo más viejo, usando el `<title>` de cada página
-como nombre. No hay que añadir el enlace a mano.
+## La navegación se escribe sola
+
+No hay que añadir ningún enlace a mano:
+
+- La portada (`lucia.srz.es`) lista las asignaturas, con cuántas páginas tiene
+  cada una y la fecha de la última.
+- Cada asignatura tiene su propia página (`lucia.srz.es/frances/`) con la lista
+  de todo lo que hay dentro, de lo más nuevo a lo más viejo.
+- El nombre con el que aparece cada página es su `<title>`.
+
+### Para crear una asignatura nueva
+
+Al subir el fichero, en el nombre escribe la carpeta delante con una barra:
+`musica/trabajo-de-bach.html`. GitHub crea la carpeta sola y en el siguiente
+despliegue aparece en la portada.
+
+Las carpetas se llaman en minúsculas, sin acentos y con guiones en vez de
+espacios, pero en la portada salen bien escritas: `geografia-e-historia` se
+muestra como «Geografía e Historia». Si una asignatura sale con un nombre feo,
+sube dentro de su carpeta un fichero `categoria.txt` con el nombre que quieras
+en la primera línea; ese fichero no se publica, solo sirve para el índice.
+
+Una carpeta sin ningún `.html` dentro no cuenta como asignatura, así que
+`paginas/imagenes/` no aparece en la portada.
 
 ### Para empezar una página nueva
 
@@ -30,31 +53,36 @@ Van en `paginas/imagenes/` y se enlazan así:
 
 ### Dos cosas que ahorran disgustos
 
-- **Nombres de fichero** en minúsculas, sin acentos, sin eñes y sin espacios:
-  `examen-de-mates.html`, no `Exámen de Mates.html`.
-- **Que no falte el `<title>`**, que es lo que sale en la portada y en la
+- **Nombres de fichero y de carpeta** en minúsculas, sin acentos, sin eñes y
+  sin espacios: `examen-de-mates.html`, no `Exámen de Mates.html`.
+- **Que no falte el `<title>`**, que es lo que sale en los índices y en la
   pestaña del navegador.
 
-### Si prefieres tu propia portada
+### Si prefieres tus propios índices
 
-Sube un `index.html` a `paginas/` y manda el tuyo; entonces no se genera la
-lista automática.
+Sube un `index.html` a `paginas/` y manda el tuyo como portada; lo mismo dentro
+de la carpeta de una asignatura. Donde haya un `index.html` propio no se genera
+el automático.
 
 ## Para el que mantiene esto
 
 Sitio estático sin dependencias: `build.py` copia `paginas/` a `dist/`, añade
 los sueltos de la raíz (`estilo.css`, `plantilla.html`, `404.html`,
-`robots.txt`), escribe el `CNAME` y genera la portada. No modifica el HTML que
-haya escrito nadie.
+`robots.txt`), escribe el `CNAME` y genera la portada y un índice por cada
+subcarpeta con páginas. No modifica el HTML que haya escrito nadie.
 
 ```bash
 python3 build.py         # construye dist/
 python3 build.py --ver   # construye y sirve en http://localhost:8000
 ```
 
+Los nombres bonitos de las asignaturas habituales están en el diccionario
+`NOMBRES` de `build.py`; el `categoria.txt` de cada carpeta manda sobre él y
+evita tener que tocar el código.
+
 Cada push a `main` dispara `.github/workflows/deploy.yml`, que construye y
 publica `dist/` en GitHub Pages. El checkout usa `fetch-depth: 0` porque las
-fechas del índice salen del último commit de cada fichero.
+fechas de los índices salen del último commit de cada fichero.
 
 El `robots.txt` pide a los buscadores que no indexen nada, y las páginas llevan
 `<meta name="robots" content="noindex, nofollow">`. La web es pública igual

@@ -91,10 +91,19 @@ th { font-weight: 600; }
 
 .indice { list-style: none; padding: 0; }
 
+/* El "Sin asignatura" de la portada, pegado a su lista. */
+.indice + h2 { margin-bottom: 0; }
+
 .indice li {
   padding: 1rem 0;
   border-bottom: 1px solid var(--borde);
 }
+
+/* Sin la raya del último, que si no se junta con la del enlace de volver. */
+.indice li:last-child { border-bottom: 0; }
+
+/* En los índices de asignatura la lista va justo debajo del título. */
+h1 + .indice { margin-top: 2rem; }
 
 .indice a {
   display: block;
@@ -105,7 +114,9 @@ th { font-weight: 600; }
 
 .indice a:hover { text-decoration: underline; }
 
-.fecha { color: var(--suave); font-size: .9rem; }
+/* La fecha de cada página y, en la portada, el recuento de la asignatura. */
+.fecha,
+.meta { color: var(--suave); font-size: .9rem; }
 
 .indice .vacio { color: var(--suave); border-bottom: 0; }
 
