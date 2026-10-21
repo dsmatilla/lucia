@@ -2,7 +2,10 @@
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mapa de Europa: localiza y aprende</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#eef2f4;--card:#fff;--tx:#14232e;--mu:#5d6f7b;--sea:#bcd8e6;--land:#dfe8d2;--ln:#8fa57e;--ac:#2f5fd0;--ok:#1c8a5a;--bad:#d2453d;--bd:#cfd9df;--me:#e3ebff}
@@ -10,11 +13,14 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--card:#17222a;--tx:#e6edf1;--mu:#92a4b0;--sea:#17384b;--land:#34452f;--ln:#5f7a52;--ac:#7ea2ff;--ok:#4cc58b;--bad:#ff7a70;--bd:#2a3a45;--me:#223566}}
 :root[data-theme="dark"]{--bg:#0f171d;--card:#17222a;--tx:#e6edf1;--mu:#92a4b0;--sea:#17384b;--land:#34452f;--ln:#5f7a52;--ac:#7ea2ff;--ok:#4cc58b;--bad:#ff7a70;--bd:#2a3a45;--me:#223566}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:'Bricolage Grotesque',system-ui,sans-serif;min-height:100%}
-.app{max-width:1280px;margin:0 auto;padding:14px;display:grid;gap:14px;grid-template-columns:minmax(0,1fr) 340px}
-@media(max-width:900px){.app{grid-template-columns:minmax(0,1fr)}}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px}
-h1{font-size:20px;font-weight:800;margin:0 0 8px}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Atkinson Hyperlegible',system-ui,sans-serif;min-height:100%;line-height:1.5}
+h1,h2,.q,.lb{font-family:'Bricolage Grotesque',system-ui,sans-serif}
+.app{max-width:1000px;margin:0 auto;padding:14px;display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px}
+
+/* Cabecera, igual que en las demás páginas */
+header h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.1}
+header p{margin:4px 0 0;color:var(--mu);max-width:60ch}
 .q{font-size:26px;font-weight:800;line-height:1.15;min-height:34px}
 .q small{display:block;font-size:13px;font-weight:400;color:var(--mu)}
 .bar{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
@@ -31,21 +37,22 @@ svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulat
 polyline.shp{fill:none;stroke-opacity:.55;stroke-linecap:round;stroke-linejoin:round}
 .shp.ok{--c:var(--ok)}.shp.bad{--c:var(--bad)}
 .lb{font-size:10px;font-weight:600;fill:var(--tx);stroke:#fff;stroke-width:3;paint-order:stroke;text-anchor:middle;pointer-events:none}
-.chat{display:flex;flex-direction:column;height:calc(100vh - 28px);max-height:720px;min-height:380px;position:sticky;top:14px}
-@media(max-width:900px){.chat{height:460px;position:static}}
-.chat h2{font-size:16px;margin:0}
-.ch{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px}
-#msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:2px}
-.m{max-width:90%;padding:7px 10px;border-radius:12px;font-size:14px;line-height:1.4;white-space:pre-wrap}
-.m.a{background:var(--bg);align-self:flex-start;border-bottom-left-radius:3px}
-.m.u{background:var(--me);align-self:flex-end;border-bottom-right-radius:3px}
-.cf{display:flex;gap:6px;margin-top:8px}
-.cf input{flex:1;min-width:0;font:inherit;padding:8px 10px;border-radius:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
-.hint{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
-</style></head><body>
+
+/* Pie común de lucia.srz.es */
+.pie{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--bd);padding-top:14px;font-size:.9rem;color:var(--mu)}
+.pie a{color:inherit;font-weight:700;text-decoration:none}
+.pie a:hover{text-decoration:underline}
+</style>
+</head>
+
+<body>
 <div class="app">
-<main class="card">
+<header>
 <h1>Europa: localiza y sitúa</h1>
+<p>Penínsulas, islas, montañas y la Gran Llanura: localízalas en el mapa mudo y repásalas en modo estudio.</p>
+</header>
+<main class="card">
 <div class="q" id="q"></div>
 <div class="st" id="st"></div>
 <div class="bar" id="cats"></div>
@@ -58,12 +65,10 @@ polyline.shp{fill:none;stroke-opacity:.55;stroke-linecap:round;stroke-linejoin:r
 <div class="mapw"><svg id="map" viewBox="0 0 670 478" role="img" aria-label="Mapa de Europa">
 <g id="base"></g><g id="rev"></g><g id="mk"></g></svg></div>
 </main>
-<aside class="card chat">
-<div class="ch"><h2>Pide una pista a Claude</h2><button id="rchat">↻ Reiniciar chat</button></div>
-<div id="msgs"></div>
-<div class="hint"><button id="pista">💡 Pista para este</button><button id="rev2">¿Cómo lo recuerdo?</button></div>
-<div class="cf"><input id="in" placeholder="Escribe tu duda…" autocomplete="off"><button id="send">Enviar</button></div>
-</aside>
+<footer class="pie">
+<a href="./">← Geografía e Historia</a>
+<span>lucia.srz.es</span>
+</footer>
 </div>
 <script>
 const $=s=>document.querySelector(s),svg=$('#map');
@@ -136,30 +141,11 @@ svg.addEventListener('click',e=>{
  if(hit(f,p)){lock=true;if(!fails)good++;reveal(f,'ok');st(fails?'¡Correcto!':'¡Correcto a la primera!','ok');setTimeout(next,1100)}
  else{fails++;mk.innerHTML=`<circle cx="${p[0]}" cy="${p[1]}" r="9" fill="none" stroke="var(--bad)" stroke-width="3"/>`;
   if(fails>=3){lock=true;reveal(f,'bad');st('Te lo enseño: así se sitúa. Fíjate bien.','bad');setTimeout(next,1800)}
-  else st(`No es ahí (${fails}/3). Pide una pista al chat si quieres.`,'bad')}});
+  else st(`No es ahí (${fails}/3). A la tercera te lo enseño.`,'bad')}});
 $('#skip').onclick=()=>{const f=cur();if(!f||lock||study)return;lock=true;reveal(f,'bad');st('Revelado. Fíjate dónde está.','bad');setTimeout(next,1600)};
 $('#study').onclick=()=>{study=!study;$('#study').classList.toggle('on',study);mk.innerHTML='';
  if(study){const tmp=rev.innerHTML;rev.dataset.keep=tmp;rev.innerHTML=F.map(f=>shape(f,'')+label(f)).join('');st('Modo estudio: todo a la vista. Pulsa de nuevo para volver al juego.')}
  else{rev.innerHTML=rev.dataset.keep||'';st('Vuelves al juego.')}};
 $('#rmap').onclick=resetMap;
-/* Chat */
-const msgs=$('#msgs');let hist=[],sample=null,busy=false;
-(window.claude&&claude.use?claude.use('sample'):Promise.resolve(null)).then(s=>sample=s).catch(()=>{});
-const add=(r,t)=>{const d=document.createElement('div');d.className='m '+r;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d};
-function resetChat(){hist=[];msgs.innerHTML='';add('a','¡Hola! Soy tu tutor de geografía. Pregúntame cómo localizar cualquier accidente geográfico o pulsa «Pista para este».')}
-async function ask(q){
- if(busy||!q.trim())return;
- if(!sample){add('a','El chat solo funciona al abrir la página en claude.ai y aceptar el permiso.');return}
- busy=true;add('u',q);hist.push({role:'user',content:q});const w=add('a','Pensando…');
- const f=cur(),ctx=`Eres un tutor de geografía de Europa para un estudiante dentro de un juego de mapa. Responde en español, con 2-4 frases. Ayuda a LOCALIZAR el elemento con pistas (países vecinos, mares, orientación, forma, comparación con otros accidentes) y algún truco para recordarlo. No des coordenadas ni digas «haz clic en». Si pide una pista, da una pista parcial sin soltarlo todo, salvo que insista. Elemento que está intentando localizar ahora: ${f?f.n:'ninguno'}.`;
- const m=hist.map((x,j)=>j==hist.length-1?{role:'user',content:ctx+'\n\nMensaje del estudiante: '+x.content}:x);
- try{const r=await sample(m,{cache:false,modelTier:'quick'});w.textContent=r.text;hist.push({role:'assistant',content:r.text})}
- catch(e){hist.pop();w.textContent=e&&e.code=='rate_limited'?'Demasiadas peticiones, espera un momento.':'No he podido responder. Inténtalo de nuevo.'}
- busy=false;msgs.scrollTop=msgs.scrollHeight}
-$('#send').onclick=()=>{const v=$('#in').value;$('#in').value='';ask(v)};
-$('#in').addEventListener('keydown',e=>{if(e.key=='Enter')$('#send').click()});
-$('#pista').onclick=()=>{const f=cur();ask(f?`Dame una pista para localizar: ${f.n}`:'Dame un consejo general para estudiar el mapa de Europa')};
-$('#rev2').onclick=()=>{const f=cur();ask(f?`¿Qué truco me ayuda a recordar dónde está: ${f.n}?`:'¿Qué trucos hay para memorizar el mapa de Europa?')};
-$('#rchat').onclick=()=>{if(!busy)resetChat()};
-resetChat();resetMap();
+resetMap();
 </script></body></html>

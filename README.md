@@ -43,6 +43,34 @@ Una carpeta sin ningún `.html` dentro no cuenta como asignatura, así que
 Copia [`plantilla.html`](plantilla.html), cámbiale el nombre y escribe dentro.
 Trae ya lo necesario para que se vea bien en el móvil.
 
+### Lo que llevan todas las páginas
+
+Da igual lo distinta que sea cada página por dentro; estas cuatro cosas son
+iguales en todas para que la web parezca una sola web:
+
+```html
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>El título que sale en el índice</title>
+```
+
+Y al final, antes de cerrar la página, el enlace de vuelta a la asignatura:
+
+```html
+<footer class="pie">
+  <a href="./">← Francés</a>
+  <span>lucia.srz.es</span>
+</footer>
+```
+
+Si la página trae su propio diseño (de los que hace Claude, por ejemplo), el
+`pie` se queda con sus colores; basta con copiar también el bloque `.pie` del
+CSS de cualquiera de las páginas que ya están subidas.
+
 ### Imágenes
 
 Van en `paginas/imagenes/` y se enlazan así:
