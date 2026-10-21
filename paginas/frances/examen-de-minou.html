@@ -1,0 +1,451 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>L'examen de Minou</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: a French Seyès exercise book page; the exam sheet ("la copie") sits on it with its red margin, Minou keeps you company in the margin column. */
+:root{
+  --paper:#f7f8fd; --rule:#d5dbf2; --rule-strong:#b3bde6; --margin:#e7898b;
+  --sheet:#ffffff; --ink:#1d2657; --muted:#5a6390;
+  --accent:#ef8a17; --accent-ink:#a95600; --accent-soft:#fff1df;
+  --good:#1d8a4b; --good-soft:#e3f5ea; --bad:#c4313a; --bad-soft:#fde7e8;
+  --line:#dfe3f3; --shadow:0 1px 0 #d9ddf0, 0 14px 30px -18px rgba(29,38,87,.35);
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121830; --rule:#1d2545; --rule-strong:#28315a; --margin:#7a3a45;
+  --sheet:#1a2140; --ink:#e7eaf8; --muted:#9ea6cc;
+  --accent:#ffa040; --accent-ink:#ffb566; --accent-soft:#3a2a17;
+  --good:#53c985; --good-soft:#163628; --bad:#ff7077; --bad-soft:#3d1c22;
+  --line:#2b345e; --shadow:0 14px 30px -18px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121830; --rule:#1d2545; --rule-strong:#28315a; --margin:#7a3a45;
+  --sheet:#1a2140; --ink:#e7eaf8; --muted:#9ea6cc;
+  --accent:#ffa040; --accent-ink:#ffb566; --accent-soft:#3a2a17;
+  --good:#53c985; --good-soft:#163628; --bad:#ff7077; --bad-soft:#3d1c22;
+  --line:#2b345e; --shadow:0 14px 30px -18px rgba(0,0,0,.7); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{
+  background-color:var(--paper);
+  background-image:
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule-strong) 31px 32px),
+    repeating-linear-gradient(to bottom, transparent 0 7px, var(--rule) 7px 8px),
+    repeating-linear-gradient(to right, transparent 0 31px, var(--rule) 31px 32px);
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:20px 48px; min-height:100%;
+}
+.wrap{max-width:980px; margin:0 auto; display:grid; gap:20px}
+header.top{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.brand{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.brand h1{font-family:var(--display); font-weight:800; font-size:clamp(28px,5vw,40px); line-height:1; margin:0; letter-spacing:-.5px; text-wrap:balance}
+.brand h1 span{color:var(--accent-ink)}
+.brand small{color:var(--muted); font-size:14px}
+.tool{font:inherit; font-size:14px; border:1.5px solid var(--line); background:var(--sheet); color:var(--ink); border-radius:999px; padding:6px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:6px}
+.tool[aria-pressed="false"]{color:var(--muted)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+.layout{display:grid; grid-template-columns:240px minmax(0,1fr); gap:24px; align-items:start}
+/* Minou */
+.buddy{position:sticky; top:calc(env(safe-area-inset-top,0px) + 16px); display:grid; gap:10px; justify-items:center}
+.bubble{position:relative; background:var(--sheet); border:2px solid var(--ink); border-radius:18px; padding:10px 14px; font-family:var(--display); font-weight:600; font-size:19px; line-height:1.25; text-align:center; min-height:62px; width:100%; display:grid; place-items:center; box-shadow:var(--shadow)}
+.bubble small{display:block; font-family:var(--body); font-weight:400; font-size:13px; color:var(--muted); margin-top:2px}
+.bubble::after{content:""; position:absolute; bottom:-11px; left:50%; width:18px; height:18px; background:var(--sheet); border-right:2px solid var(--ink); border-bottom:2px solid var(--ink); transform:translateX(-50%) rotate(45deg)}
+.catbox{width:200px; max-width:100%; cursor:pointer; background:none; border:0; padding:0; border-radius:20px}
+.catbox img{display:block; width:100%; height:auto; animation:bob 3.2s ease-in-out infinite; transform-origin:50% 90%; filter:drop-shadow(0 8px 6px rgba(0,0,0,.15))}
+.catbox.happy img{animation:jump .7s ease}
+.catbox.sad img{animation:shake .6s ease}
+.catbox.party img{animation:jump .7s ease 0s 3}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-2deg)}}
+@keyframes jump{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-28px) scale(1.05,.95) rotate(-6deg)}60%{transform:translateY(0) scale(1.06,.92)}100%{transform:translateY(0) scale(1)}}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}40%{transform:rotate(7deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+.streak{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+
+/* La copie */
+.sheet{background:var(--sheet); border-radius:6px 16px 16px 6px; box-shadow:var(--shadow); position:relative; padding:24px 24px 24px 56px; min-width:0}
+.sheet::before{content:""; position:absolute; top:0; bottom:0; left:36px; width:2px; background:var(--margin)}
+.eyebrow{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-ink); font-weight:700}
+h2{font-family:var(--display); font-weight:800; font-size:28px; line-height:1.15; margin:4px 0 0; text-wrap:balance}
+p{margin:0}
+.stack{display:grid; gap:18px}
+
+/* start */
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{font:inherit; font-size:15px; text-align:left; border:2px solid var(--line); background:transparent; color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; display:flex; gap:8px; align-items:center}
+.chip .box{width:18px; height:18px; border-radius:5px; border:2px solid var(--muted); display:grid; place-items:center; flex:none}
+.chip[aria-pressed="true"]{border-color:var(--accent); background:var(--accent-soft)}
+.chip[aria-pressed="true"] .box{background:var(--accent); border-color:var(--accent)}
+.chip[aria-pressed="true"] .box::after{content:""; width:8px; height:4px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(-45deg) translate(1px,-1px)}
+.label{font-weight:700; font-size:14px; color:var(--muted)}
+.seg{display:inline-flex; border:2px solid var(--line); border-radius:12px; overflow:hidden}
+.seg button{font:inherit; font-size:15px; border:0; background:transparent; color:var(--ink); padding:8px 16px; cursor:pointer; font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--sheet)}
+.primary{font-family:var(--display); font-weight:800; font-size:20px; border:0; border-radius:14px; background:var(--accent); color:#1d1306; padding:10px 22px; cursor:pointer; box-shadow:0 4px 0 var(--accent-ink); transition:transform .08s}
+.primary:active{transform:translateY(3px); box-shadow:0 1px 0 var(--accent-ink)}
+.secondary{font:inherit; font-weight:700; border:2px solid var(--ink); background:transparent; color:var(--ink); border-radius:14px; padding:9px 18px; cursor:pointer}
+.row{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+
+/* quiz */
+.progress{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center}
+.bar{height:10px; border-radius:99px; background:var(--line); overflow:hidden}
+.bar i{display:block; height:100%; background:var(--accent); border-radius:99px; transition:width .3s}
+.count{font-variant-numeric:tabular-nums; color:var(--muted); font-size:14px}
+.qhead{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.prompt{font-family:var(--display); font-weight:600; font-size:clamp(22px,4vw,28px); line-height:1.3; text-wrap:balance}
+.prompt .blank{display:inline-block; min-width:70px; border-bottom:3px dashed var(--accent); margin:0 4px}
+.prompt .hint{color:var(--muted); font-size:.75em; font-weight:600}
+.prompt .gloss{display:block; font-family:var(--body); font-weight:400; font-size:15px; color:var(--muted); margin-top:4px}
+.speak{flex:none; width:42px; height:42px; border-radius:50%; border:2px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; display:grid; place-items:center}
+.visual{display:flex; justify-content:center}
+.swatch{width:120px; height:120px; border-radius:24px; border:3px solid var(--ink)}
+.pic{font-size:64px; line-height:1}
+.bignum{font-family:var(--display); font-weight:800; font-size:84px; line-height:1; color:var(--accent-ink); font-variant-numeric:tabular-nums}
+.opts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.opt{font:inherit; font-size:18px; font-weight:700; text-align:left; padding:12px 14px; border-radius:14px; border:2px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; display:flex; gap:10px; align-items:center; min-width:0}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt kbd{font-family:var(--body); font-size:12px; color:var(--muted); border:1.5px solid var(--line); border-radius:6px; padding:0 6px; flex:none}
+.opt.ok{border-color:var(--good); background:var(--good-soft)}
+.opt.ko{border-color:var(--bad); background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.typebox{display:grid; gap:10px}
+.typebox input{font:inherit; font-size:22px; font-weight:700; padding:10px 14px; border-radius:14px; border:2px solid var(--line); background:transparent; color:var(--ink); width:100%}
+.typebox input.ok{border-color:var(--good); background:var(--good-soft)}
+.typebox input.ko{border-color:var(--bad); background:var(--bad-soft)}
+.accents{display:flex; flex-wrap:wrap; gap:6px}
+.accents button{font:inherit; font-size:17px; width:38px; height:38px; border-radius:10px; border:1.5px solid var(--line); background:transparent; color:var(--ink); cursor:pointer}
+.feedback{border-radius:14px; padding:12px 16px; display:grid; gap:4px}
+.feedback.ok{background:var(--good-soft); border-left:5px solid var(--good)}
+.feedback.ko{background:var(--bad-soft); border-left:5px solid var(--bad)}
+.feedback strong{font-family:var(--display); font-size:20px}
+.feedback .full{font-weight:700}
+.feedback .why{color:var(--muted); font-size:15px}
+
+/* results */
+.grade{display:flex; gap:20px; align-items:center; flex-wrap:wrap}
+.note{font-family:var(--display); font-weight:800; font-size:76px; line-height:1; color:var(--accent-ink); font-variant-numeric:tabular-nums}
+.note small{font-size:28px; color:var(--muted)}
+.secs{display:grid; gap:8px}
+.secrow{display:grid; grid-template-columns:minmax(0,190px) minmax(0,1fr) 52px; gap:10px; align-items:center; font-size:15px}
+.secrow .bar i{background:var(--good)}
+.secrow .bar.mid i{background:var(--accent)}
+.secrow .bar.low i{background:var(--bad)}
+.secrow b{font-variant-numeric:tabular-nums; text-align:right}
+.mistakes{display:grid; gap:8px; margin:0; padding:0; list-style:none}
+.mistakes li{border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; display:grid; gap:2px; font-size:15px}
+.mistakes .q{font-weight:700}
+.mistakes .you{color:var(--bad)}
+.mistakes .sol{color:var(--good); font-weight:700}
+
+@media (max-width:720px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .buddy{position:static; grid-template-columns:96px minmax(0,1fr); align-items:center; justify-items:stretch; gap:14px}
+  .catbox{width:96px; grid-row:1; grid-column:1}
+  .bubble{grid-row:1; grid-column:2; font-size:17px; min-height:0}
+  .bubble::after{left:-11px; top:50%; bottom:auto; transform:translateY(-50%) rotate(135deg)}
+  .streak{display:none}
+  .sheet{padding:20px 16px 20px 40px}
+  .sheet::before{left:24px}
+}
+@media (max-width:440px){.opts{grid-template-columns:minmax(0,1fr)} .opt kbd{display:none}}
+@media (prefers-reduced-motion:reduce){.catbox img,.catbox.happy img,.catbox.sad img,.catbox.party img{animation:none}.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>L'examen de <span>Minou</span></h1><small>Français · 1<sup>er</sup> trimestre</small></div>
+    <button class="tool" id="voiceBtn" aria-pressed="true" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+      <span id="voiceLabel">Voz activada</span>
+    </button>
+  </header>
+
+  <div class="layout">
+    <aside class="buddy" aria-live="polite">
+      <div class="bubble" id="bubble">Salut ! Je suis Minou.<small>¡Hola! Te acompaño en el examen.</small></div>
+      <button class="catbox" id="cat" type="button" aria-label="Minou, el gato. Tócalo para que te diga algo.">
+        <img alt="Minou, un gato naranja y gris" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX0AAAF9CAYAAADoebhRAAAYI0lEQVR42u3d23Uct7ZG4S4NhnIcAZ2KY5BCYAgKQYzBqbgj8M6lz8M2tymK3XXDZWHhm2P0g2WJ7EIVJn6sQqGWC2bldufPF00D5EUHn1furg2A9DGx5F0jAOljYtm7ToCEfNEEhA9A0gepu1YASR8Tp3izCSABT5pgHuHfvq9E+RcNDpA+hhX+muQPfidlHmBgdGCyP5L2XTfAoKjpx5J993RfYXYAQNJHpHR/MPG7dgDSR2vh10zmK+J37QAD4kbugMJXggEg6ScXfi/RP0j7rh1A0kdJ4Uv0AEh/AuGTPYBaWLLZVvaZhG9bBkDSxxk5SvgAJH3CBwDSJ/xGB/G9zDECIH1I+AAao6afNOF/XF9vcAFwuXjApovwO26dcPh3e0gLyIHyTiLhAwDpRxoVKif8LXvhezsWQPpokPJ7lnQAgPQTJXyDBICtWL1TOeXXEv4mcd/+/ucv/+YsAZD00wr/9ve/wi+Q9s0MANJHp6dRNwkfAEi/rfBrpPzDwr/z5xI8QPoYUfgbyjmVZgAezAJIf/IRoYfwK2I2AOTC6p2CKb+08IvX729/W8kDSPqImPDdsAVA+oFT/qjCP1G+Uc8HSH9O4ZdM+RI+gJqo6Y+S8MkeAOn3F36JlN803buZC0yN8s4Zf44mfACkrwmOpfwmL0MhfACknyPhr6Z8wgdQATX9Aym/qvDJHoCknyvld93awE1cgPTRLuV3LekQPkD6mqBtyu8mfAC4qOk3S/lRE36TVUgASH804R+V46b6/ZuU1+SvPAOA9OOy+4ZtY6lL+cB8qOlXTPmhD5jwAdIH4QPIjfJOR+GeWa9P3ACOMPOLMLq84Hy4C+TFtQNkYtbyzs2pBzAjM5V3iL5+e0r/AOmPKXulndNtbQAASH+MZE/4Rduf/AHSjyl7wpf+gexk64TSfY2L5MU1B5D+hMLvug9+gEGr0vEbBADSryv7vYKMLPuesxYzAID008h+NNEnGQSIHyD9drLPJPqeA0CDdjQ4AJN0nl3C3yK4GUQ/ePrXL4BJL27Cl/z1E4D094ushoS+Nt7k4bXSmas9CCQbaA0GcNFGln0N6XwNsqNPyUFA+jcIgPRDC7+27L8OuFVbiUGA/A0CcFFOI/yvifbkPDMA1BT/738+Xy6Xy+V6veprwOQXYjfh15b9FgHX+g5H5V9L/G/Sf+OR/J+fn6uel4YDD/mD9PfKfiThlyizlP5eR75TafF/FP6afGtLv8MgQP6YXvpdhF9SqK+VW7PnoNRK+p8Jt7XwGw4GxI9ppV+snNND+K8NWzGD+B8JfzQKDQLkj6mk31z4I6X7SPIn/aqDAPFjCukXFf4Z6f+481W+3Wmi1wBdtLX4S0g/s/ALDADEj+p8yST8o6L88eCrfPb/XoN0zRrf46vXxxfj+fl57/0IrY+0SX/14j4i+7WUf09oPzb2tW+XJYzwa4r63jGeHYBnSvknkr+0j3RJv4rwj4rxx45w9SNoEHtdLiEHI/ya/IHehHsxevR31d5ut8uyxDTs66I8czJlVxf028+d5ClkkP7jqFxL+KVFmFn8tWYMPUs7RwTb8+lgIIv0ZVCJf5pZw4mB4XZR10cC6Xep41c9oMBpPxoz3sD9bGAwQ0AEvkT4Ej2F/y1pqDpSpqm9Rj8qX29tZkbq+Jgl6Ss0dBS/Ms9/E/YW4T5qK6ujQPqFhJ85QWafGWwhSmnn0aqZLYPjlsFzTxtuHYiA0nQt7xD+GDKf4TyV2gL7/QeYTfpdlmce4ZvFEqlT/meJHyD9xMLfkuK+XZZdq3EyrdyJegP3er3+8qkpfnV7kP6EZFyGOZLM1gRP/EA86Q9T1jkq/llSfg/Zb/270dvE4IFZpN9V+Gd+/sdOuizL3c8scj/Tnnvq+aW3STib9mtJ2/0EZE36mDzl1xb+kdlBFPEDmaQ/fFkHbc9XqTJNNPF/9m+kfGSTfnjhP+q8El17Stflz6Z+UgbpIzW9Sju75Xz7u9lgUmJFjwCB6aUfvayjk7Y7Z7tl/yb8QcR/7++YRSCb9G+RhO/eQcyB7nS6byj+I+0mPEDSJ7vpUv690s5mAb9P90f+fyHxl0zm936WzdYwqvSH21ZqZvH3eIH6LuGfmQk0Ev/H9nvUpso6yCb9YZdoSvztUn5x4R9I/bXFv1f4Uj5GTvrp5IXGKf+I8A/8+9KirThrEkkwnvRHkK60HyDlnxV+A/EfKdEo6yCj9EOt2JH2B0z5pYQfTPwnhS+KIKT0h7l5uyZ+ab9Oym8u/Pc/t9LPLpXe1fMxivRv7z7TCA05pVZrKaeyDjJIf5foCXaulH9IprVS/s7fUVr8W4Qv5SMCTyvCT5Gob98vl+XFye5+zloI//3vWn5blXCgG7WKjeia9G/ZDtQspDzv6/nd6vidEn+VWRDQSfq3rAdL/HXaIqTwA4pfykdE6R8S/kgyJf4eSvtt2yep+KV8ROJpr/BJU8q/XP4t7RQV2j3xl5gpbKjxS/mYKelPJfyZB66Swu82U6iU+GskcikfUaU/nSjNWAZmEPFv+FlSPmJKP6sgZxN/6ZTfNcVWvA9Q4rgkfAwr/exinEX8aY/ziPjHWNEDVOFJE/wrxFke4PrsOLcMCs1r+XvFv/dFLH1nCko7iJn0Z5R/5uO6N7ClGPD2SrzDjd1/ZE/4IP1Igpz1Ju898f/+53PclF9Z/EBW6UseSVP/3uOYMvG3S/v6GSR94o/3/d+Lf5iEf0b8fco8QEzpz7475aji9xzCJeoTuICkT6Dxvu/yMnDKPyJ+tX2QvrT/UaQjyL/5S1EkfmBY6S/Ev13+EQcAJZ2zDSjtQ9LHIJKt9V2k/WTtANL/2DWk/fHEL+HHweCAEZO+tcQHpNtLvIQPYA/23qkg4NozojOin/ol8ctv63X7uC9bAapKf7kkflfuyPIvkexv339djnmvLPH8/Jzr5GwRf6XfrGcgsvQJv5Cgz4q/Rvnms/X36eQOYJP0yT5I6lerP9DWt18v32URsIF70if8BvLvTYqnbDcK//2fkz/wX3a9GB3INiiUxHJNjCT9odIqpPyo4gfSSJ/wCf8jI978JX6Q/obSDuEjVeK//F/rX+mGAsLwRPYHevDLWO01e1nnnviXy38+ObkezMLE0sc22X/2/63WARCRL2ckR/iP//7bJzNR6vqWZALbpW9nzQYDRo92nC3lnxb/g9LO2uBmuSZSJH3iL3v8Ldtx1rKOxA9sk/5qT5H4x0n9rYUfbenmIfG7gQtJn/hHl//s4n8k/59W7qwI/+SxmXogFLtX77yJynLOy69b9B5Ii6Xb02qdldTvPbiQ9I8lEqn/ziDw9jmY/Edu1/BP6H52XuqmfCC09N/EbzpaYnA7KP8zv1PK7zOIWbmDkaV/KPVjZ7qsIP4owh8qGbt5C9KX+quJ/0TJZ7SEH1L8O++/SPmYUfpSf+kEf0L+GDLh6zsYUvrzuqGWbA/I/953UccvL3w3b0H6qCv/jQPASIk/lDh3DLAFv7eUD9LHeTG9F7+UXzbl7xW+ej6mk/60teZaD/gkS/yh0r71+ICkH3ZA2SB/4t/RnpZmAqSfYTYxSnmhm/g3Cr/C91PPx/DSn+4iHiVJE3+f76WeD0kfXdI+8T8audXxAdIfUfyJSj0ABpf+dCt4em3Nm0T8UdL1me+x0s7q+ZD0RyPsQEb8qQYegPQxlfh7yJfwQfo7ArDmIv6RJVzidyntQNK/TFTXj/SqvUSv/WshfgkfKCh9xBT/SCt6akq51M+2QgqkD+IPLv6GwlfaQUrpu7AHZFbxK+kAkv6UaX9G8TcWvjCEYThysd4+/cPviRrl5bhc+37xvG+F2jpo1Tg+K3aQiSdNkCzxJ91GuNdgtWGwuZE/SD/tvOigUFvOEFbEf71e1boLzy7eyZ/4EZ5iNf1p36K1dbBomcATreEfRPjvxX/TephC+qg4U4ghNOyTP0D6aCj+ROv3Bx0UiR8hOVLTX2a9oL/uOOrXZUX8SjCzJH51fuRN+ur6OwaIFnV+A0tx3nYH3XEzXOJHXunj+Mygh/iVePYL/9F/A6SPy9fbivyTrqvPJPdHgt+Y+qV9hOHoOv27df3lJdfTuSXlf7fOr8Y/hPgBSR+7xd8cMwmDBFBb+m7oBoHwiR8oKP1lNvG/Flh8t1rjbyh8kiqLG+MYAXvvSPgge0j6ZdI+4gpfyid8SPpnxJ9qSdrte4fy1NkVPDvSPeE3l7pwhDRJ//GV7oZum8GC8KV4IIL00UD4OyD8PmdJE2Aq6Uv7n3NqBc+BdE/4hA9I+gd47d2NpfsmnCjtLO8+QFrpT7dmv4vsCV+yB07yVPiCt7FUx1RP9s1SPrlDMvmHh9IfbSO2ezOUUk/Uli4VkT3hA2uUrulPUeZ5DdjtCR/AFppvw2Dr5bKDBtlL+UBv6U9R239dtpd5as0MCH+/xD9rs40rdQgfKah5Id9V4khJ/1FJ6p70a5d/yL5Iao/UV4Chk/5q4s9S4mlZ2yf6tOEISHUxp1jN0+MGNMmHSfqED0kfRJ9c9IQPSV/aJ3rCB0h/GvGXkj7JNxf+3tVkZI/UKO9sHbUOvliF5EMkfCIHGks/xdr9txnJ738SOYAxabm18t20NdL2DIQ/VMqX8IGO0n/cOwcQP+EPJXwAkaU/WuJHeKR8IEjHWK3tR1zNI+UPlfAJHwjWOYYSP+EPI3vSB1boVd7RKUH4wITyDf3QloQ/nPBJHxigg4QUP+EPJ3vCBzYQ/onctxU9s79ti/DJHsiS9FfTfuvUL+VL9oCkD5A9MDxRHs7a1IlbPLwl5YcX/uaZIYD4iWlzZ65R6iH88LKX+IGTRCvvbN6N833qd5N3SuG/DwnkDyRISrum8GfFL+UPJXupH0jaUZqIn/BjCf/ji2c8kQvMlY6qi5/0Y8qe+IF5p8TVxE/4/WW/JvwTP5f8gRmkv1X8hD+G7IkfIP3T4if88YR/4vcRPzCD9O/Jn/DHlT3xA/mlX+TpS+LvL/uSwj/4XYgfpD+j9Am/neRryp74AdJflT7h55L9we9L/JiWKXbZtE1DftkfCBLED0k/c9IfQERDSz5SOyv1AONe9Le19H5ku+XZ5V9rH5xI7WplD5BU+v87kJ3yn0X8DTY6C92W5A8klT75txP9aG1G/MDg0l+7MTuL+Fuk+CwDpO0bgMTSPyp/5J4NeR8vkHzJ5vPzc/M0TPLprgdv54KkP0LS//gQFvnPJfhKqZ/8Iem3Fr7UT/Al2+Jg8id+SPothb+W9Ne2WphJ/kRfLfUTPyT9kUSYTfzk3jz1S/wgfZLEZPJ3kxfDEfFiXa3leyMWWuChLmTkiyYA7if/HTPCmxYD6QNJ5E/8IH2A+IkfpA8Q/+VG/iB9IIn4pX6Qfjl0EmRM/QDp18ByTRA/MJH0AeIHkkl/6176APEDvzLENgxEjxHEb/tuSPqAxC/tg/QB4gdIX0cA8QOSPkD8AOl/wBp9ED+QQPpW7oD4gXzSd9GD+AFJHyB+gPSBvBA/5pX+1nq+m7gAIOkD0j5A+gBA+gAA0gcAkH4w/vrDlraIz4599y8XdX2QPgCA9KV9AJD0gYgo8YD0AQCkD0DaB+kDAEgfGIeddX2gKEv0Kezel6jYfC0v1+u+FVrR5brzeBZXACR9EH7hfwOQPjCg8EdAmQczS9/UFQAk/ctleXGSpHxcLN3ELNIH4R9F+QT4ladsB/TXH1creCaB1IGxk/7dur4Sj5Rv4AIqi7YTD+uWe9bsfzZQ6GB5pJ/tXG4c5Cx4QKqkD0wp/FKhCBhR+sve9P7Z31EOSp9402EWilZEvJG7PEo0hD435AjkSvpkIeU7h49R4gHpE75z6BiBsaVfZJXC7fv+XToBIDORH85atk5liX18HpV2JGAgf9LflfjXbu7+9cf6ipDr9frTBzGED2Au6b+J30MpmAKzGpD+xtRfIu2DBAHSH2lUsIZ/ONTyD2HZJkh/i/il/XGEb3YDkL50A+IHJP19aV/iJD2A9JOK//3nDSUewk/SDjezX5D+gfQv5WNwiB+7eJrpYN/E//xs1QgASX8apHvnACD9Uee2hffdkfIBkP4k4id8RGPjNamuj7mk/yb+M/In/KEkB+Agw9/IXV5+lv3t+68rdT4bDGzZAID0E6V+xMVNXKAfXzQBESFH1tEEyCZ9e+oDgKSPLLiJC5B+U5R4MDhKPCD9u73DzV4ApA9pHwDpS/sw4GoTkL6OBsTLMpoApC/tAwDpow+PlmaaZQGkv8rZfXQ+S/vX65WAMOTAeVHiwQOeNMFjrtdryoeGPhvQPByVitvFU+yjna/deXfapI/zwn/05x2SKvqJBG3Pz5kX3B/6d6NJv1pyeXRDd6Yyj5LWOHjByvCy7/KzJP2N4oeBJ2I7mDFNK/vDP5v0iQj5r0dpv6/kbw3PwervIX1lgZADnEF2exsp80wt+d3n2uqdnZ0sy3T6+fm5u1gjfIdMA/mGtnyTgVU9jdN1qVC2o7/cXb2VJumXeuetun68JIsyM7hPEinKJPsi5+7tU+gc3x2MlHcmFlGEWYsbkWWvswNSIP8Asq/4b26kL+0bZCV+8h9Q9id+xk/fecSa/uICzScpcg/Rpmr+G5JytBnt3nMt6R9I+wQl7SdN/JJ/oRU472v0LUqYe34H6ZPpEIIi/i5lhNvGTybZ92zvJuJPJf1SK3hgkBo4pfeQ0YjyLzpw9ZT9juOV9FdbSYlnaNFNntJ7yj/arKDa9xhA9r/g4SwMJd+sW133OscdwstNH+nLqEk/xOqCkdN+1O++pTOZZZUTz4hJtffMK3J7bXm5TrryTum6fsY1+9GlSfz9hIbPJZ+pbZR3lBvCdrg1se/ccMwAXXD2kHnQzd6fR34I49YynT+aQYx0kWztrFGOabTv2/L4IxxzBvnP8jrUN5WNnPTDPJmbMe1/vGh6rj1WyhlbpCM9DzIBt9Eft761SvoZ0v7ZztfzGNe++2xJP9LxRp+NzMijc5JynX6Ph7RmSKPX6/Wnj4TmmiL28fBw1p5phd03pxvoUCYoIM5AbPVO4Qs8auqp1fFalR+UEIAyjC795jdzb9/H2+Nng/Df7u3cav3OPWKWDK3aAelL++0G0Z/GOJIAxuOvP66X5Ur6U6f9HaLvOpNCngFS2a296P/XcV/u9920N3J7SjlSp135LluW7C4fPiBSwg8s/LVZuqQv7R+ZGYRJ/9kfivt4zf3+J9njrug3kXrJprRfVfxL71nAjII52tHPXsu9ns/A/utgzXsZpN+t5BB93X6HDqoUlFT8EwWa8Of+5Plf0pd3lpc+2zIYLIv9jiluJK+J9OM1/Ncf18vvfyqlGOj3k0X6IVeZ9Fy+mSSNEf4GEZA/2e8JYW7kVk75QdftD196GbmeX3pAlvqJfo+XMkm/WdqfdNUOOgl/S3nyvShKDwBbt0m2cqdvot/qpWw325q8WGWv9Ft3hgJr80Ofz5lS/tHrVvKfQ/Q7naS80yrle6Uizl5ve+VfM/kjhuiPCJ/0geTyfy8a8s8j+jNkk/70e8UkKu3gjvyPlnweyceAMI60dyb8X/p9RglUq+uvNPLq9sQtSjzJpN+1LRudk+ON0+DhwNEGg6iCjiJ80m8s/dqy2rFv/vDncgTxt3hWwtvc5pvp7fnrn/3h02wNdrSTRF+mmVD4w3FS8odeZFPziXPkE35mERRN+3vvjrdOqBtls2Q7l8GWwpYQ/uZZjuRP9kf7+nTS39MxztTNWsoqecpvMoB23LZiOXP85D+13A/19cxT/lNp/6TwI8lqyXwuj7ZlkL2JlhLHT/5TS353Pyf9OsJvkvYnquOvSu9RewbbfG6p3Rbkn17wp66p7Df3dou/oPCrp/3Jbt6O/vzFEqktDALDCv70NeWJ3GMnatnx96rIymqdqSRf/Lrac70bIEIIvtj1NW3Sf38xVxJ+tbQ/sfAjpf1ltnYh/+6iL3LdzZAGbwEau5j4ky/PjCK4RdsYGDpLvto1qLyTTwLLBOfips2atU0TQfYcLII8eNnsGpxB+mc7whKlM6rjF2nPGQbFMMl/MPFOEcy+CPHNTs5yQuZk9vnxHvnM3EaIcZ0qBTTiFqBtDtf2pXwE7y8YpA8+TXZCbiOeOMJHR4GRf7K+98UJanoCl5NyB3r0GSWz++1hlML5qfP7Mo+Uj1n7ASc6QBe78wfgJFbvGGwBkD4AgPQRKe2bLQAg/UnET/gASH8S8RM+gOZJE/W4OVcAavH/Cz4QwpDkckoAAAAASUVORK5CYII=">
+      </button>
+      <div class="streak" id="streak"></div>
+    </aside>
+
+    <main class="sheet" id="sheet"></main>
+  </div>
+</div>
+
+<script>
+(()=>{
+/* ---------- datos ---------- */
+const SECTIONS={
+  couleurs:{fr:"Les couleurs",es:"Colores"},
+  nombres:{fr:"Les nombres 1–20",es:"Números"},
+  caractere:{fr:"Le caractère",es:"Vocabulario"},
+  articles:{fr:"Les articles indéfinis",es:"Un · une · des"},
+  etre:{fr:"Le verbe être",es:"Je suis, tu es…"},
+  transformer:{fr:"Masculin → féminin, singulier → pluriel",es:"Transformar"}
+};
+const COLORS=[
+ {es:"rojo",m:"rouge",f:"rouge",mp:"rouges",fp:"rouges",hex:"#d62828",agree:true},
+ {es:"azul",m:"bleu",f:"bleue",mp:"bleus",fp:"bleues",hex:"#1f4fd6",agree:true},
+ {es:"verde",m:"vert",f:"verte",mp:"verts",fp:"vertes",hex:"#2a9d3f",agree:true},
+ {es:"amarillo",m:"jaune",f:"jaune",mp:"jaunes",fp:"jaunes",hex:"#f5c518",agree:true},
+ {es:"naranja",m:"orange",f:"orange",mp:"orange",fp:"orange",hex:"#f28c28",agree:false},
+ {es:"rosa",m:"rose",f:"rose",mp:"roses",fp:"roses",hex:"#f39bc0",agree:true},
+ {es:"violeta",m:"violet",f:"violette",mp:"violets",fp:"violettes",hex:"#7b3fa0",agree:true},
+ {es:"negro",m:"noir",f:"noire",mp:"noirs",fp:"noires",hex:"#141414",agree:true},
+ {es:"blanco",m:"blanc",f:"blanche",mp:"blancs",fp:"blanches",hex:"#ffffff",agree:true},
+ {es:"gris",m:"gris",f:"grise",mp:"gris",fp:"grises",hex:"#8b8b8b",agree:true},
+ {es:"marrón",m:"marron",f:"marron",mp:"marron",fp:"marron",hex:"#7a4a22",agree:false}
+];
+const C_NOUNS=[
+ {fr:"un pull",g:"m",n:"s",es:"un jersey"},{fr:"un crayon",g:"m",n:"s",es:"un lápiz"},{fr:"un chat",g:"m",n:"s",es:"un gato"},
+ {fr:"une robe",g:"f",n:"s",es:"un vestido"},{fr:"une trousse",g:"f",n:"s",es:"un estuche"},{fr:"une voiture",g:"f",n:"s",es:"un coche"},
+ {fr:"des stylos",g:"m",n:"p",es:"unos bolis"},{fr:"des chaussures",g:"f",n:"p",es:"unos zapatos"},{fr:"des fleurs",g:"f",n:"p",es:"unas flores"}
+];
+const NUM=["","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix","onze","douze","treize","quatorze","quinze","seize","dix-sept","dix-huit","dix-neuf","vingt"];
+const CHAR=[
+ {m:"bavard",f:"bavarde",esm:"hablador",esf:"habladora",pic:"🗣️",def:"parle tout le temps."},
+ {m:"désordonné",f:"désordonnée",esm:"desordenado",esf:"desordenada",pic:"🧦",def:"ne range jamais sa chambre."},
+ {m:"gourmand",f:"gourmande",esm:"glotón",esf:"glotona",pic:"🍰",def:"adore les gâteaux et le chocolat."},
+ {m:"étourdi",f:"étourdie",esm:"despistado",esf:"despistada",pic:"🔑",def:"oublie toujours ses clés."},
+ {m:"rigolo",f:"rigolote",esm:"gracioso",esf:"graciosa",pic:"😂",def:"fait rire tout le monde."},
+ {m:"romantique",f:"romantique",esm:"romántico",esf:"romántica",pic:"💌",def:"écrit des poèmes d'amour."},
+ {m:"têtu",f:"têtue",esm:"testarudo",esf:"testaruda",pic:"🐐",def:"ne change jamais d'avis."},
+ {m:"sympathique",f:"sympathique",esm:"simpático",esf:"simpática",pic:"😊",def:"est agréable avec tout le monde."},
+ {m:"sociable",f:"sociable",esm:"sociable",esf:"sociable",pic:"🥳",def:"adore être avec beaucoup de gens."},
+ {m:"timide",f:"timide",esm:"tímido",esf:"tímida",pic:"🙈",def:"rougit quand on lui parle."}
+];
+const A_NOUNS=[
+ {w:"livre",g:"m",es:"libro",esp:"libros"},{w:"crayon",g:"m",es:"lápiz",esp:"lápices"},{w:"cahier",g:"m",es:"cuaderno",esp:"cuadernos"},{w:"sac",g:"m",es:"bolso",esp:"bolsos"},
+ {w:"chat",g:"m",es:"gato",esp:"gatos"},{w:"chien",g:"m",es:"perro",esp:"perros"},{w:"stylo",g:"m",es:"bolígrafo",esp:"bolígrafos"},{w:"ami",g:"m",es:"amigo",esp:"amigos"},
+ {w:"gomme",g:"f",es:"goma",esp:"gomas"},{w:"trousse",g:"f",es:"estuche",esp:"estuches"},{w:"règle",g:"f",es:"regla",esp:"reglas"},{w:"maison",g:"f",es:"casa",esp:"casas"},
+ {w:"fleur",g:"f",es:"flor",esp:"flores"},{w:"table",g:"f",es:"mesa",esp:"mesas"},{w:"amie",g:"f",es:"amiga",esp:"amigas"},{w:"chaise",g:"f",es:"silla",esp:"sillas"}
+];
+const ES_ART={m:{s:"un",p:"unos"},f:{s:"una",p:"unas"}};
+const PRON=[
+ {p:"Je",v:"suis",n:"s"},{p:"Tu",v:"es",n:"s"},{p:"Il",v:"est",n:"s",g:"m"},{p:"Elle",v:"est",n:"s",g:"f"},
+ {p:"Nous",v:"sommes",n:"p"},{p:"Vous",v:"êtes",n:"p"},{p:"Ils",v:"sont",n:"p",g:"m"},{p:"Elles",v:"sont",n:"p",g:"f"}
+];
+const ETRE=["suis","es","est","sommes","êtes","sont"];
+
+/* ---------- utilidades ---------- */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const uniq=a=>[...new Set(a)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const opts=(answer,pool,n=4)=>shuffle([answer,...shuffle(uniq(pool).filter(x=>x!==answer)).slice(0,n-1)]);
+const adj=(c,g,n)=>{const b=g==="f"?c.f:c.m;return n==="p"?(b.endsWith("s")?b:b+"s"):b};
+const BLANK='<span class="blank"></span>';
+const strip=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"");
+const norm=s=>s.toLowerCase().replace(/[’`]/g,"'").replace(/[.!?¡¿]/g,"").replace(/\s+/g," ").trim();
+
+/* ---------- generadores ---------- */
+const GEN={
+ couleurs:[
+  ()=>{const c=rnd(COLORS);return{kind:"mc",prompt:"¿De qué color es?",visual:`<div class="swatch" style="background:${c.hex}" role="img" aria-label="muestra de color"></div>`,options:opts(c.m,COLORS.map(x=>x.m)),answer:c.m,full:`C'est ${c.m}.`,why:`${cap(c.es)} = ${c.m}.`,key:"c1"+c.m}},
+  ()=>{const c=rnd(COLORS);return{kind:"type",prompt:`Escribe en francés: <b>${c.es}</b>`,answer:c.m,full:`${cap(c.m)}.`,why:`${cap(c.es)} = ${c.m} (masculino).`,key:"c2"+c.m}},
+  ()=>{const c=rnd(COLORS.filter(x=>x.agree));const nn=rnd(C_NOUNS);const a=adj(c,nn.g,nn.n);
+   const gtxt=(nn.g==="f"?"femenino":"masculino")+" "+(nn.n==="p"?"plural":"singular");
+   return{kind:"mc",prompt:`${nn.fr} ${BLANK} <span class="hint">(${c.m})</span><span class="gloss">(${nn.es})</span>`,say:`${nn.fr}`,options:shuffle(uniq([c.m,c.f,c.mp,c.fp])),answer:a,full:`${cap(nn.fr)} ${a}.`,why:`«${nn.fr.split(" ")[1]}» es ${gtxt}, así que el color concuerda: ${a}.${c.m===c.f&&nn.g==="f"?" Si termina en -e, no cambia en femenino.":""}`,key:"c3"+c.m+nn.fr}},
+  ()=>{const c=rnd(COLORS.filter(x=>x.agree&&x.m!==x.f));return{kind:"type",prompt:`un pull ${c.m} → une robe ${BLANK}`,say:`un pull ${c.m}`,answer:c.f,full:`Une robe ${c.f}.`,why:`«Robe» es femenino: ${c.m} → ${c.f}.`,key:"c4"+c.m}}
+ ],
+ nombres:[
+  ()=>{const n=1+Math.floor(Math.random()*20);return{kind:"mc",prompt:"¿Cómo se escribe este número?",visual:`<div class="bignum">${n}</div>`,options:opts(NUM[n],NUM.slice(1).filter((_,i)=>Math.abs(i+1-n)<=4)),answer:NUM[n],full:`${n} = ${NUM[n]}`,why:"",key:"n1"+n}},
+  ()=>{const n=1+Math.floor(Math.random()*20);const pool=[n-2,n-1,n+1,n+2,n+10,n-10].filter(x=>x>=1&&x<=20).map(String);return{kind:"mc",prompt:`¿Qué número es <b>${NUM[n]}</b>?`,say:NUM[n],options:opts(String(n),pool),answer:String(n),full:`${cap(NUM[n])} = ${n}`,why:"",key:"n2"+n}},
+  ()=>{const a=1+Math.floor(Math.random()*10),b=1+Math.floor(Math.random()*10);const s=a+b;const pool=[s-1,s+1,s-2,s+2].filter(x=>x>=1&&x<=20).map(x=>NUM[x]);return{kind:"mc",prompt:`${NUM[a]} + ${NUM[b]} = ?`,say:`${NUM[a]} plus ${NUM[b]}`,options:opts(NUM[s],pool),answer:NUM[s],full:`${cap(NUM[a])} plus ${NUM[b]} égale ${NUM[s]}.`,why:`${a} + ${b} = ${s}`,key:"n3"+a+"+"+b}},
+  ()=>{const n=1+Math.floor(Math.random()*20);return{kind:"type",prompt:"Escribe el número en letras:",visual:`<div class="bignum">${n}</div>`,answer:NUM[n],full:`${n} = ${NUM[n]}`,why:n>16&&n<20?"Del 17 al 19 se escriben con guion: dix-sept, dix-huit, dix-neuf.":"",key:"n4"+n}}
+ ],
+ caractere:[
+  ()=>{const c=rnd(CHAR);const g=rnd(["m","f"]);const P=g==="f"?"Elle":"Il";const a=g==="f"?c.f:c.m;return{kind:"mc",prompt:`${g==="f"?"Ella es":"Él es"} <b>${g==="f"?c.esf:c.esm}</b>.<br>${P} est ${BLANK}`,options:opts(a,CHAR.map(x=>g==="f"?x.f:x.m)),answer:a,full:`${P} est ${a}.`,why:`${g==="f"?c.esf:c.esm} = ${a}`,key:"v1"+c.m}},
+  ()=>{const c=rnd(CHAR);return{kind:"mc",prompt:`¿Qué significa <b>${c.m}</b>?`,say:c.m,options:opts(c.esm,CHAR.map(x=>x.esm)),answer:c.esm,full:`${cap(c.m)} = ${c.esm}`,why:"",key:"v2"+c.m}},
+  ()=>{const c=rnd(CHAR);const g=rnd(["m","f"]);const P=g==="f"?"Elle":"Il";const a=g==="f"?c.f:c.m;return{kind:"mc",prompt:`${P} ${c.def}<br>${P} est ${BLANK}`,say:`${P} ${c.def}`,visual:`<div class="pic" aria-hidden="true">${c.pic}</div>`,options:opts(a,CHAR.map(x=>g==="f"?x.f:x.m)),answer:a,full:`${P} ${c.def} ${P} est ${a}.`,why:`${a} = ${g==="f"?c.esf:c.esm}`,key:"v3"+c.m}}
+ ],
+ articles:[
+  ()=>{const nn=rnd(A_NOUNS);const pl=Math.random()<.35;const w=pl?nn.w+"s":nn.w;const a=pl?"des":(nn.g==="f"?"une":"un");
+   return{kind:"mc",prompt:`${BLANK} ${w}<span class="gloss">(${ES_ART[nn.g][pl?"p":"s"]} ${pl?nn.esp:nn.es})</span>`,options:["un","une","des"],answer:a,full:`${cap(a)} ${w}.`,why:pl?"Plural (masculino o femenino) → des.":(nn.g==="f"?`«${nn.w}» es femenino → une.`:`«${nn.w}» es masculino → un.`),key:"a1"+w}},
+  ()=>{const nn=rnd(A_NOUNS);const pl=Math.random()<.5;const w=nn.w+(pl?"s":"");const right=pl?`des ${w}`:`${nn.g==="f"?"une":"un"} ${w}`;
+   const wrong=pl?[`un ${w}`,`une ${w}`,`des ${nn.w}`]:[`${nn.g==="f"?"un":"une"} ${w}`,`des ${w}`,`des ${w}s`];
+   return{kind:"mc",prompt:`¿Cómo se dice <b>${ES_ART[nn.g][pl?"p":"s"]} ${pl?nn.esp:nn.es}</b>?`,options:shuffle([right,...wrong]),answer:right,full:`${cap(right)}.`,why:pl?"En plural: des + nombre con -s.":`«${nn.w}» es ${nn.g==="f"?"femenino → une":"masculino → un"}.`,key:"a2"+w}}
+ ],
+ etre:[
+  ()=>{const P=rnd(PRON);const c=rnd(CHAR);const g=P.g||rnd(["m","f"]);const a=adj(c,g,P.n);return{kind:"mc",prompt:`${P.p} ${BLANK} ${a}.`,options:opts(P.v,ETRE),answer:P.v,full:`${P.p} ${P.v} ${a}.`,why:`Être: ${P.p.toLowerCase()} → ${P.v}.`,key:"e1"+P.p}},
+  ()=>{const P=rnd(PRON);return{kind:"type",prompt:`${P.p} ${BLANK} <span class="hint">(être)</span>`,answer:P.v,full:`${P.p} ${P.v}.`,why:"je suis · tu es · il/elle est · nous sommes · vous êtes · ils/elles sont",key:"e2"+P.p}},
+  ()=>{const v=rnd(ETRE);const cands=PRON.filter(x=>x.v===v);const P=rnd(cands);const c=rnd(CHAR);const g=P.g||rnd(["m","f"]);const a=adj(c,g,P.n);
+   const answers=cands.filter(x=>!x.g||x.g===g).map(x=>x.p);const pool=PRON.filter(x=>!cands.includes(x)).map(x=>x.p);
+   return{kind:"mc",prompt:`${BLANK} ${v} ${a}.`,options:shuffle([P.p,...shuffle(pool).slice(0,3)]),answer:P.p,accept:answers,full:`${P.p} ${v} ${a}.`,why:`«${v}» va con ${answers.join(" / ").toLowerCase()}.`,key:"e3"+v+a}},
+  ()=>{const P=rnd(PRON.filter(x=>x.g));const c=rnd(CHAR.filter(x=>x.m!==x.f));const a=adj(c,P.g,P.n);const og=P.g==="f"?"m":"f";const on=P.n==="p"?"s":"p";
+   const wrongV=rnd(ETRE.filter(x=>x!==P.v));
+   const right=`${P.v} ${a}`;const options=shuffle(uniq([right,`${P.v} ${adj(c,og,P.n)}`,`${P.v} ${adj(c,P.g,on)}`,`${wrongV} ${a}`]));
+   return{kind:"mc",prompt:`${P.p} ${BLANK} <span class="hint">(être + ${c.m})</span>`,options,answer:right,full:`${P.p} ${right}.`,why:`${P.p} → ${P.v}; ${P.g==="f"?"femenino":"masculino"} ${P.n==="p"?"plural":"singular"} → ${a}.`,key:"e4"+P.p+c.m}}
+ ],
+ transformer:[
+  ()=>{const c=Math.random()<.75?rnd(CHAR.filter(x=>x.m!==x.f)):rnd(CHAR.filter(x=>x.m===x.f));return{kind:"type",prompt:`Il est ${c.m}. → Elle est ${BLANK}`,say:`Il est ${c.m}.`,answer:c.f,full:`Elle est ${c.f}.`,why:c.m===c.f?"Termina en -e: no cambia en femenino.":(c.m==="rigolo"?"Ojo: rigolo → rigolote.":`Femenino: + e → ${c.f}.`),key:"t1"+c.m}},
+  ()=>{const c=rnd(CHAR);const g=rnd(["m","f"]);const s=adj(c,g,"s"),p=adj(c,g,"p");const P=g==="f"?["Elle","Elles"]:["Il","Ils"];return{kind:"type",prompt:`${P[0]} est ${s}. → ${P[1]} sont ${BLANK}`,say:`${P[0]} est ${s}.`,answer:p,full:`${P[1]} sont ${p}.`,why:`Plural: + s → ${p}.`,key:"t2"+g+c.m}},
+  ()=>{const c=rnd(CHAR.filter(x=>x.m!==x.f));const a=adj(c,"f","p");return{kind:"type",prompt:`Il est ${c.m}. → Elles sont ${BLANK}`,say:`Il est ${c.m}.`,answer:a,full:`Elles sont ${a}.`,why:`Femenino (+e${c.m==="rigolo"?", rigolote":""}) y plural (+s) → ${a}.`,key:"t3"+c.m}},
+  ()=>{const nn=rnd(A_NOUNS);const a=nn.g==="f"?"une":"un";return{kind:"type",prompt:`${a} ${nn.w} → des ${BLANK}`,say:`${a} ${nn.w}`,answer:nn.w+"s",full:`Des ${nn.w}s.`,why:"En plural: un/une → des, y el nombre añade -s (que no se pronuncia).",key:"t4"+nn.w}},
+  ()=>{const c=rnd(COLORS.filter(x=>x.agree&&x.mp!==x.m));return{kind:"type",prompt:`un stylo ${c.m} → des stylos ${BLANK}`,say:`un stylo ${c.m}`,answer:c.mp,full:`Des stylos ${c.mp}.`,why:`Plural masculino: ${c.m} → ${c.mp}.`,key:"t5"+c.m}}
+ ]
+};
+
+/* ---------- Minou ---------- */
+const bubble=document.getElementById("bubble"),cat=document.getElementById("cat"),streakEl=document.getElementById("streak");
+const OK=[["Bravo !","¡Bravo!"],["Super !","¡Genial!"],["Parfait !","¡Perfecto!"],["Excellent !","¡Excelente!"],["Très bien !","¡Muy bien!"],["Génial !","¡Genial!"],["Miaou ! C'est ça !","¡Miau! ¡Eso es!"]];
+const KO=[["Oh là là…","Casi… mira la respuesta."],["Pas grave !","¡No pasa nada!"],["Courage !","¡Ánimo, la próxima sale!"],["Presque !","¡Casi!"],["On continue !","¡Seguimos!"]];
+const PETS=[["Ronron…","Me gusta que me acaricies."],["Miaou !","¡Estoy contigo!"],["Tu peux le faire !","¡Tú puedes!"],["J'adore le français !","¡Me encanta el francés!"],["Je suis gourmand…","Soy un gato goloso."],["Je suis bavard, moi !","Yo soy muy hablador."]];
+const TIPS={
+ couleurs:["Una pista…","Con «une» el color suele llevar -e."],
+ nombres:["Una pista…","17, 18 y 19 llevan guion: dix-sept…"],
+ caractere:["Una pista…","Si es «Elle», el adjetivo suele llevar -e."],
+ articles:["Una pista…","un = masc., une = fem., des = plural."],
+ etre:["Una pista…","Nous sommes, vous êtes, ils sont."],
+ transformer:["Una pista…","Femenino: +e. Plural: +s."]
+};
+let catTimer;
+function say(fr,es,mood){
+  bubble.innerHTML=`${esc(fr)}${es?`<small>${esc(es)}</small>`:""}`;
+  if(mood){cat.classList.remove("happy","sad","party");void cat.offsetWidth;cat.classList.add(mood);clearTimeout(catTimer);catTimer=setTimeout(()=>cat.classList.remove(mood),2200)}
+}
+cat.addEventListener("click",()=>{const p=rnd(PETS);say(p[0],p[1],"happy");speak(p[0])});
+
+/* ---------- voz ---------- */
+let voiceOn=true;
+const canSpeak="speechSynthesis" in window;
+const voiceBtn=document.getElementById("voiceBtn");
+if(!canSpeak) voiceBtn.hidden=true;
+try{if(localStorage.getItem("minou-voice")==="off")voiceOn=false}catch(e){}
+function syncVoice(){voiceBtn.setAttribute("aria-pressed",String(voiceOn));document.getElementById("voiceLabel").textContent=voiceOn?"Voz activada":"Voz desactivada"}
+syncVoice();
+voiceBtn.addEventListener("click",()=>{voiceOn=!voiceOn;syncVoice();try{localStorage.setItem("minou-voice",voiceOn?"on":"off")}catch(e){} if(!voiceOn&&canSpeak)speechSynthesis.cancel()});
+function speak(t,force){
+  if(!canSpeak||(!voiceOn&&!force)||!t)return;
+  try{const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,"").replace(/→/g,", "));u.lang="fr-FR";u.rate=.9;
+    const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith("fr"));if(v)u.voice=v;
+    speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
+}
+
+/* ---------- estado ---------- */
+const sheet=document.getElementById("sheet");
+let chosen=new Set(Object.keys(SECTIONS)),total=20;
+let Q=[],idx=0,results=[],streak=0,answered=false,idleTimer;
+try{const s=JSON.parse(localStorage.getItem("minou-setup")||"null");if(s){chosen=new Set(s.secs.filter(k=>SECTIONS[k]));if(!chosen.size)chosen=new Set(Object.keys(SECTIONS));total=s.total||20}}catch(e){}
+
+function build(n,secs){
+  const out=[],seen=new Set();let i=0,guard=0;const order=shuffle(secs);
+  while(out.length<n&&guard<n*40){guard++;const sec=order[i%order.length];i++;
+    const q=rnd(GEN[sec])();if(seen.has(q.key)){i--;continue}seen.add(q.key);q.sec=sec;out.push(q)}
+  return shuffle(out);
+}
+
+/* ---------- pantallas ---------- */
+function startScreen(){
+  clearTimeout(idleTimer);
+  say("Salut ! Je suis Minou.","¡Hola! Elige los temas y empezamos.");
+  sheet.innerHTML=`<div class="stack">
+    <div><div class="eyebrow">Examen de français</div><h2>¿Qué entra en el examen?</h2></div>
+    <div class="chips" role="group" aria-label="Temas">${Object.entries(SECTIONS).map(([k,s])=>`<button type="button" class="chip" id="sec-${k}" data-k="${k}" aria-pressed="${chosen.has(k)}"><span class="box"></span><span>${s.fr}</span></button>`).join("")}</div>
+    <div class="stack" style="gap:8px"><span class="label">Número de preguntas</span>
+      <div class="seg" role="group" aria-label="Número de preguntas">${[10,20,30].map(n=>`<button type="button" id="n-${n}" data-n="${n}" aria-pressed="${n===total}">${n}</button>`).join("")}</div></div>
+    <p style="color:var(--muted);font-size:15px">Hay preguntas de elegir y otras de escribir. Si escribes sin acento, Minou te la da por buena pero te avisa. Puedes responder con las teclas 1–4 y pasar con Intro.</p>
+    <div class="row"><button type="button" class="primary" id="go">C'est parti !</button><span id="warn" style="color:var(--bad);font-size:15px"></span></div>
+  </div>`;
+  sheet.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.k;chosen.has(k)?chosen.delete(k):chosen.add(k);b.setAttribute("aria-pressed",String(chosen.has(k)))}));
+  sheet.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{total=+b.dataset.n;sheet.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))}));
+  document.getElementById("go").addEventListener("click",()=>{
+    if(!chosen.size){document.getElementById("warn").textContent="Elige al menos un tema.";say("Oups !","Elige al menos un tema.","sad");return}
+    try{localStorage.setItem("minou-setup",JSON.stringify({secs:[...chosen],total}))}catch(e){}
+    begin(build(total,[...chosen]));
+  });
+}
+function begin(questions){Q=questions;idx=0;results=[];streak=0;streakEl.textContent="";say("Allez, on commence !","¡Vamos allá!","happy");speak("Allez, on commence !");showQ()}
+
+function showQ(){
+  answered=false;const q=Q[idx];const sec=SECTIONS[q.sec];
+  sheet.innerHTML=`<div class="stack">
+    <div class="progress"><div class="bar" aria-hidden="true"><i style="width:${idx/Q.length*100}%"></i></div><span class="count">${idx+1} / ${Q.length}</span></div>
+    <div class="qhead"><div><div class="eyebrow">${sec.fr}</div></div>
+      ${canSpeak&&q.say?`<button type="button" class="speak" id="hear" aria-label="Escuchar en francés"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>`:""}</div>
+    ${q.visual?`<div class="visual">${q.visual}</div>`:""}
+    <div class="prompt">${q.prompt}</div>
+    ${q.kind==="mc"
+      ?`<div class="opts">${q.options.map((o,i)=>`<button type="button" class="opt" id="opt-${i}" data-v="${esc(o)}"><kbd>${i+1}</kbd><span>${esc(o)}</span></button>`).join("")}</div>`
+      :`<form class="typebox" id="tf" autocomplete="off"><input id="ans" type="text" inputmode="text" autocapitalize="off" spellcheck="false" aria-label="Tu respuesta" placeholder="Escribe aquí…">
+        <div class="row" style="justify-content:space-between"><div class="accents">${["é","è","ê","à","ç","ô","û","-"].map(c=>`<button type="button" data-c="${c}" aria-label="Insertar ${c}">${c}</button>`).join("")}</div>
+        <button type="submit" class="primary" style="font-size:18px;padding:8px 18px">Comprobar</button></div></form>`}
+    <div id="fb"></div>
+  </div>`;
+  const hear=document.getElementById("hear");if(hear)hear.addEventListener("click",()=>speak(q.say,true));
+  if(q.kind==="mc"){sheet.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>answer(b.dataset.v,b)))}
+  else{const inp=document.getElementById("ans");inp.focus({preventScroll:true});
+    sheet.querySelectorAll(".accents button").forEach(b=>b.addEventListener("click",()=>{const s=inp.selectionStart??inp.value.length,e=inp.selectionEnd??s;inp.value=inp.value.slice(0,s)+b.dataset.c+inp.value.slice(e);inp.focus();inp.setSelectionRange(s+1,s+1)}));
+    document.getElementById("tf").addEventListener("submit",ev=>{ev.preventDefault();if(answered)return;if(!inp.value.trim()){inp.focus();return}answer(inp.value)})}
+  clearTimeout(idleTimer);
+  idleTimer=setTimeout(()=>{if(!answered){const t=TIPS[q.sec];say(t[0],t[1])}},20000);
+}
+
+function answer(val,btn){
+  if(answered)return;answered=true;clearTimeout(idleTimer);
+  const q=Q[idx];let ok=false,accentNote=false;
+  if(q.kind==="mc"){ok=(q.accept||[q.answer]).includes(val)}
+  else{const v=norm(val),a=norm(q.answer);
+    if(v===a||v.endsWith(" "+a))ok=true;
+    else if(strip(v)===strip(a)||strip(v).endsWith(" "+strip(a))){ok=true;accentNote=true}
+    else if(v.replace(/[-\s]/g,"")===a.replace(/[-\s]/g,"")){ok=true;accentNote="guion"}}
+  results.push({q,val,ok});
+  if(q.kind==="mc"){sheet.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const isRight=(q.accept||[q.answer]).includes(b.dataset.v);if(isRight&&(ok?b===btn:b.dataset.v===q.answer))b.classList.add("ok");if(b===btn&&!ok)b.classList.add("ko")})}
+  else{const inp=document.getElementById("ans");inp.readOnly=true;inp.classList.add(ok?"ok":"ko");sheet.querySelectorAll(".accents button,#tf .primary").forEach(b=>b.disabled=true)}
+  if(ok){streak++;const m=rnd(OK);
+    if(streak>0&&streak%5===0)say(`${NUM[streak]||streak} d'affilée !`,`¡${streak} seguidas! Eres una máquina.`,"party");else say(m[0],m[1],"happy")}
+  else{streak=0;const m=rnd(KO);say(m[0],m[1],"sad")}
+  streakEl.textContent=streak>=2?`Racha: ${streak} seguidas`:"";
+  const right=q.accept&&q.accept.length>1?q.accept.join(" / "):q.answer;
+  const note=accentNote===true?`<span class="why">¡Cuidado con el acento! Se escribe <b>${esc(q.answer)}</b>.</span>`:accentNote==="guion"?`<span class="why">¡Cuidado con el guion! Se escribe <b>${esc(q.answer)}</b>.</span>`:"";
+  const last=idx===Q.length-1;
+  document.getElementById("fb").innerHTML=`<div class="stack" style="gap:14px"><div class="feedback ${ok?"ok":"ko"}" role="status">
+      <strong>${ok?"¡Correcto!":"No es correcto"}</strong>
+      ${ok?"":`<span>Respuesta: <b>${esc(right)}</b></span>`}
+      <span class="full">${esc(q.full)}</span>${note}${q.why?`<span class="why">${esc(q.why)}</span>`:""}
+    </div><div class="row"><button type="button" class="primary" id="next">${last?"Ver mi nota":"Siguiente"}</button></div></div>`;
+  speak(q.full);
+  const nb=document.getElementById("next");nb.focus({preventScroll:true});
+  nb.addEventListener("click",()=>{idx++;idx<Q.length?showQ():showResults()});
+}
+
+document.addEventListener("keydown",e=>{
+  if(!Q.length||!sheet.querySelector(".prompt"))return;
+  if(!answered&&Q[idx]&&Q[idx].kind==="mc"&&/^[1-4]$/.test(e.key)){const b=document.getElementById("opt-"+(+e.key-1));if(b)b.click()}
+});
+
+function showResults(){
+  clearTimeout(idleTimer);
+  const good=results.filter(r=>r.ok).length,n=results.length,note=Math.round(good/n*100)/10;
+  const verdict=note>=9?["Excellent !","¡Sobresaliente! Minou está orgulloso."]:note>=7?["Très bien !","¡Notable! Casi perfecto."]:note>=5?["Bien !","Aprobado. Repasa tus errores."]:["Il faut réviser…","Hay que repasar un poco más. ¡Tú puedes!"];
+  say(verdict[0],verdict[1],note>=5?"party":"sad");speak(verdict[0]);
+  const bySec={};results.forEach(r=>{(bySec[r.q.sec]??={ok:0,n:0}).n++;if(r.ok)bySec[r.q.sec].ok++});
+  const wrong=results.filter(r=>!r.ok);
+  sheet.innerHTML=`<div class="stack">
+    <div><div class="eyebrow">Résultat</div><h2>${verdict[0]}</h2></div>
+    <div class="grade"><div class="note">${String(note).replace(".",",")}<small>/10</small></div>
+      <p>${good} de ${n} respuestas correctas.<br><span style="color:var(--muted)">${verdict[1]}</span></p></div>
+    <div class="secs">${Object.entries(bySec).map(([k,s])=>{const p=s.ok/s.n;return`<div class="secrow"><span>${SECTIONS[k].fr}</span><div class="bar ${p>=.8?"":p>=.5?"mid":"low"}" aria-hidden="true"><i style="width:${p*100}%"></i></div><b>${s.ok}/${s.n}</b></div>`}).join("")}</div>
+    ${wrong.length?`<div class="stack" style="gap:10px"><span class="label">Para repasar</span><ul class="mistakes">${wrong.map(r=>`<li><span class="q">${r.q.prompt.replace(/<span class="blank"><\/span>/g,"___").replace(/<br>/g," ").replace(/<(?!\/?b>)[^>]+>/g," ")}</span><span class="you">Tu respuesta: ${esc(r.val)}</span><span class="sol">${esc(r.q.full)}</span></li>`).join("")}</ul></div>`:`<p>¡Ni un solo error! <b>Chapeau !</b></p>`}
+    <div class="row">${wrong.length?`<button type="button" class="primary" id="redo">Repetir mis errores</button>`:""}
+      <button type="button" class="${wrong.length?"secondary":"primary"}" id="again">Nuevo examen</button>
+      <button type="button" class="secondary" id="home">Cambiar temas</button></div>
+  </div>`;
+  const redo=document.getElementById("redo");
+  if(redo)redo.addEventListener("click",()=>begin(shuffle(wrong.map(r=>{const q={...r.q};if(q.kind==="mc"&&q.sec!=="articles")q.options=shuffle(q.options);return q}))));
+  document.getElementById("again").addEventListener("click",()=>begin(build(total,[...chosen])));
+  document.getElementById("home").addEventListener("click",()=>{Q=[];startScreen()});
+}
+
+if(canSpeak){try{speechSynthesis.getVoices()}catch(e){}}
+startScreen();
+})();
+</script>
+
+</body></html>
